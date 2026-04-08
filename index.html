@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#0b1220" />
+  <meta name="theme-color" content="#0a1220" />
   <title>Bomberos Pro | Simulador de Evaluación</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,190 +11,228 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <style>
-    :root {
-      --bg: #07111f;
-      --bg-2: #0b1729;
-      --card: rgba(14, 25, 42, 0.78);
-      --line: rgba(255,255,255,.08);
-      --text-soft: #9fb1c9;
-      --fire: #ef4444;
-      --fire-2: #f97316;
-      --blue: #3b82f6;
-      --blue-2: #1d4ed8;
-      --ok: #22c55e;
-      --bad: #ef4444;
-      --warn: #f59e0b;
-    }    
+    :root{
+      --bg:#07101b;
+      --bg-soft:#0d1828;
+      --card:rgba(12,23,39,.82);
+      --line:rgba(255,255,255,.08);
+      --txt-soft:#9db0c9;
+      --fire-1:#b91c1c;
+      --fire-2:#dc2626;
+      --fire-3:#f97316;
+      --fire-4:#f59e0b;
+      --ok:#22c55e;
+      --bad:#ef4444;
+      --mid:#f59e0b;
+    }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: 'Outfit', sans-serif;
-      color: white;
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:'Outfit',sans-serif;
+      color:#fff;
       background:
-        radial-gradient(circle at top, rgba(239,68,68,.14), transparent 26%),
-        radial-gradient(circle at 80% 20%, rgba(59,130,246,.12), transparent 22%),
-        linear-gradient(180deg, #040811 0%, #07111f 45%, #050b16 100%);
-      overflow-x: hidden;
+        radial-gradient(circle at top, rgba(220,38,38,.18), transparent 24%),
+        radial-gradient(circle at 88% 10%, rgba(249,115,22,.12), transparent 20%),
+        linear-gradient(180deg,#03070d 0%,#07101b 45%,#050913 100%);
+      overflow-x:hidden;
       -webkit-tap-highlight-color: transparent;
     }
 
-    .shell {
-      width: 100%;
-      max-width: 470px;
-      margin: 0 auto;
-      padding: 22px 16px 40px;
+    .app{
+      width:100%;
+      max-width:490px;
+      margin:0 auto;
+      padding:18px 14px 40px;
     }
 
-    .glass {
-      background: var(--card);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid var(--line);
-      box-shadow: 0 12px 50px rgba(0,0,0,.45);
+    .glass{
+      background:var(--card);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      border:1px solid var(--line);
+      box-shadow:0 18px 55px rgba(0,0,0,.40);
     }
 
-    .hero-badge {
-      background: linear-gradient(135deg, rgba(239,68,68,.18), rgba(249,115,22,.16));
-      border: 1px solid rgba(249,115,22,.28);
-      color: #ffd8c2;
+    .hidden-screen{display:none!important}
+    .muted{color:var(--txt-soft)}
+
+    .hero-badge{
+      background:linear-gradient(135deg, rgba(220,38,38,.22), rgba(249,115,22,.18));
+      border:1px solid rgba(249,115,22,.22);
+      color:#ffd7c4;
     }
 
-    .fire-icon {
-      background: linear-gradient(135deg, #991b1b, #ef4444 55%, #f97316);
-      box-shadow: 0 0 0 8px rgba(239,68,68,.08), 0 18px 40px rgba(239,68,68,.26);
+    .hero-icon{
+      background:linear-gradient(135deg,#991b1b,#dc2626 55%,#f97316);
+      box-shadow:0 0 0 8px rgba(220,38,38,.08), 0 20px 42px rgba(220,38,38,.25);
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, var(--fire), var(--fire-2));
-      box-shadow: 0 10px 24px rgba(239,68,68,.28);
-      transition: .25s ease;
+    .btn-primary{
+      background:linear-gradient(135deg,var(--fire-1),var(--fire-3));
+      box-shadow:0 12px 26px rgba(220,38,38,.25);
+      transition:.22s ease;
     }
 
-    .btn-primary:hover { transform: translateY(-1px); }
-    .btn-primary:active { transform: scale(.985); }
+    .btn-primary:hover{transform:translateY(-1px)}
+    .btn-primary:active{transform:scale(.985)}
 
-    .btn-soft {
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
+    .btn-soft{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      transition:.2s ease;
     }
 
-    .field {
-      background: rgba(2,6,23,.55);
-      border: 1px solid rgba(148,163,184,.2);
-      transition: .2s ease;
+    .btn-soft:hover{
+      border-color:rgba(249,115,22,.20);
     }
 
-    .field:focus {
-      border-color: rgba(249,115,22,.7);
-      box-shadow: 0 0 0 4px rgba(249,115,22,.12);
-      outline: none;
+    .field{
+      width:100%;
+      background:rgba(2,6,23,.52);
+      border:1px solid rgba(148,163,184,.18);
+      color:#fff;
     }
 
-    .slide-up {
-      animation: slideUp .45s ease both;
+    .field:focus{
+      outline:none;
+      border-color:rgba(249,115,22,.6);
+      box-shadow:0 0 0 4px rgba(249,115,22,.12);
     }
 
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
+    .level-card, .mode-card, .option-item{
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(15,23,42,.72);
+      transition:.2s ease;
+      cursor:pointer;
     }
 
-    .option-item {
-      border: 1px solid rgba(255,255,255,.1);
-      background: rgba(15, 23, 42, .65);
-      transition: .22s ease;
-      cursor: pointer;
+    .level-card:hover, .mode-card:hover, .option-item:hover{
+      border-color:rgba(249,115,22,.34);
     }
 
-    .option-item:hover { border-color: rgba(249,115,22,.45); }
-    .option-item:active { transform: scale(.99); }
-
-    .option-item.selected {
-      background: linear-gradient(135deg, rgba(153,27,27,.95), rgba(249,115,22,.92));
-      border-color: rgba(255,255,255,.22);
-      box-shadow: 0 0 0 3px rgba(249,115,22,.14);
-      transform: translateY(-1px);
+    .level-card.selected, .mode-card.selected, .option-item.selected{
+      background:linear-gradient(135deg, rgba(153,27,27,.96), rgba(249,115,22,.92));
+      border-color:rgba(255,255,255,.18);
+      box-shadow:0 0 0 3px rgba(249,115,22,.12);
+      transform:translateY(-1px);
     }
 
-    .muted { color: var(--text-soft); }
-    .hidden-screen { display: none !important; }
-
-    .progress-track {
-      background: rgba(255,255,255,.06);
-      overflow: hidden;
+    .progress-track{
+      background:rgba(255,255,255,.06);
+      overflow:hidden;
     }
 
-    .progress-bar {
-      background: linear-gradient(90deg, #ef4444, #f97316);
-      box-shadow: 0 0 18px rgba(249,115,22,.36);
-      transition: width .4s ease;
+    .progress-bar{
+      background:linear-gradient(90deg,var(--fire-2),var(--fire-3),var(--fire-4));
+      box-shadow:0 0 16px rgba(249,115,22,.24);
+      transition:width .35s ease;
     }
 
-    .score-ring {
-      filter: drop-shadow(0 0 12px rgba(249,115,22,.18));
+    .pill-ok{
+      background:rgba(34,197,94,.16);
+      color:#86efac;
+      border:1px solid rgba(34,197,94,.24);
     }
 
-    .pill-pass { background: rgba(34,197,94,.18); color: #86efac; border: 1px solid rgba(34,197,94,.28); }
-    .pill-mid { background: rgba(245,158,11,.18); color: #fcd34d; border: 1px solid rgba(245,158,11,.28); }
-    .pill-low { background: rgba(239,68,68,.18); color: #fca5a5; border: 1px solid rgba(239,68,68,.28); }
+    .pill-mid{
+      background:rgba(245,158,11,.16);
+      color:#fcd34d;
+      border:1px solid rgba(245,158,11,.24);
+    }
 
-    .review-card.ok { border-left: 4px solid var(--ok); }
-    .review-card.bad { border-left: 4px solid var(--bad); }
+    .pill-bad{
+      background:rgba(239,68,68,.16);
+      color:#fca5a5;
+      border:1px solid rgba(239,68,68,.24);
+    }
 
-    ::-webkit-scrollbar { width: 0; height: 0; }
+    .review-ok{border-left:4px solid var(--ok)}
+    .review-bad{border-left:4px solid var(--bad)}
+
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(18px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .fade-up{animation:fadeUp .4s ease both}
+
+    ::-webkit-scrollbar{width:0;height:0}
   </style>
 </head>
 <body>
-  <main class="shell">
-    <section id="screen-home" class="glass rounded-[34px] p-7 md:p-8 slide-up">
-      <div class="flex items-center justify-between gap-3 mb-6">
+  <main class="app">
+    <!-- HOME -->
+    <section id="screen-home" class="glass rounded-[32px] p-6 fade-up">
+      <div class="flex items-start justify-between gap-4 mb-6">
         <div>
-          <span class="hero-badge inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[.18em]">
+          <div class="hero-badge inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[.18em]">
             <i class="fa-solid fa-shield-halved"></i>
             Simulador táctico
-          </span>
+          </div>
           <h1 class="text-3xl font-black mt-4 leading-tight">Bomberos <span class="text-orange-400">Pro</span></h1>
-          <p class="muted text-sm mt-2 leading-relaxed">Entrenamiento móvil con enfoque de examen. Modo rápido, revisión de respuestas y resultado final.</p>
+          <p class="muted text-sm mt-2 leading-relaxed">
+            Entrena por niveles, con preguntas aleatorias, revisión final y modo estudio.
+          </p>
         </div>
-        <div class="fire-icon w-20 h-20 rounded-[28px] shrink-0 flex items-center justify-center">
+        <div class="hero-icon w-20 h-20 rounded-[26px] shrink-0 flex items-center justify-center">
           <i class="fa-solid fa-fire-extinguisher text-3xl"></i>
         </div>
       </div>
 
       <div class="grid grid-cols-3 gap-3 mb-6">
         <div class="btn-soft rounded-2xl p-3 text-center">
-          <div class="text-lg font-extrabold">10</div>
-          <div class="text-[10px] muted uppercase font-bold tracking-wider">Preguntas</div>
+          <div id="home-total" class="text-lg font-extrabold">10</div>
+          <div class="text-[10px] uppercase tracking-wider font-bold muted">Preguntas</div>
         </div>
         <div class="btn-soft rounded-2xl p-3 text-center">
-          <div class="text-lg font-extrabold">3</div>
-          <div class="text-[10px] muted uppercase font-bold tracking-wider">Lecciones</div>
+          <div class="text-lg font-extrabold">4</div>
+          <div class="text-[10px] uppercase tracking-wider font-bold muted">Niveles</div>
         </div>
         <div class="btn-soft rounded-2xl p-3 text-center">
-          <div class="text-lg font-extrabold">100%</div>
-          <div class="text-[10px] muted uppercase font-bold tracking-wider">Móvil</div>
+          <div class="text-lg font-extrabold">Móvil</div>
+          <div class="text-[10px] uppercase tracking-wider font-bold muted">Optimizado</div>
         </div>
       </div>
 
-      <label class="block text-xs uppercase tracking-[.18em] font-bold text-slate-400 mb-2">Nombre del efectivo</label>
-      <div class="relative mb-4">
+      <label class="block text-xs uppercase tracking-[.18em] font-bold text-slate-400 mb-2">Nombre</label>
+      <div class="relative mb-5">
         <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
         <input id="user-name" type="text" placeholder="Escribe tu nombre"
-          class="field w-full rounded-2xl py-4 pl-12 pr-4 text-white" />
+          class="field rounded-2xl py-4 pl-12 pr-4" />
       </div>
 
-      <label class="block text-xs uppercase tracking-[.18em] font-bold text-slate-400 mb-2">Modo</label>
-      <div class="grid grid-cols-2 gap-3 mb-6">
-        <button id="mode-random" class="option-item selected rounded-2xl p-4 text-left">
-          <div class="text-sm font-bold">Aleatorio</div>
-          <div class="text-[11px] muted mt-1">10 preguntas mezcladas</div>
+      <label class="block text-xs uppercase tracking-[.18em] font-bold text-slate-400 mb-3">Selecciona nivel</label>
+      <div class="grid grid-cols-2 gap-3 mb-5">
+        <button class="level-card selected rounded-2xl p-4 text-left" data-level="nivel1">
+          <div class="text-sm font-bold">Nivel 1</div>
+          <div class="text-[11px] muted mt-1">10 preguntas · Fácil</div>
         </button>
-        <button id="mode-study" class="option-item rounded-2xl p-4 text-left">
+        <button class="level-card rounded-2xl p-4 text-left" data-level="nivel2">
+          <div class="text-sm font-bold">Nivel 2</div>
+          <div class="text-[11px] muted mt-1">20 preguntas · Fácil + Media</div>
+        </button>
+        <button class="level-card rounded-2xl p-4 text-left" data-level="nivel3">
+          <div class="text-sm font-bold">Nivel 3</div>
+          <div class="text-[11px] muted mt-1">30 preguntas · Media + Difícil</div>
+        </button>
+        <button class="level-card rounded-2xl p-4 text-left" data-level="experto">
+          <div class="text-sm font-bold">Experto</div>
+          <div class="text-[11px] muted mt-1">40 preguntas · Mezcla total</div>
+        </button>
+      </div>
+
+      <label class="block text-xs uppercase tracking-[.18em] font-bold text-slate-400 mb-3">Modo</label>
+      <div class="grid grid-cols-2 gap-3 mb-6">
+        <button class="mode-card selected rounded-2xl p-4 text-left" data-mode="simulacro">
+          <div class="text-sm font-bold">Simulacro</div>
+          <div class="text-[11px] muted mt-1">Solo resultado final</div>
+        </button>
+        <button class="mode-card rounded-2xl p-4 text-left" data-mode="estudio">
           <div class="text-sm font-bold">Estudio</div>
-          <div class="text-[11px] muted mt-1">Muestra explicación al revisar</div>
+          <div class="text-[11px] muted mt-1">Muestra refuerzo en revisión</div>
         </button>
       </div>
 
@@ -203,13 +241,16 @@
         <i class="fa-solid fa-bolt"></i>
       </button>
 
-      <p class="text-[11px] text-slate-500 mt-4 text-center">Consejo: responde primero y revisa al final para memorizar mejor.</p>
+      <p class="text-[11px] text-slate-500 mt-4 text-center">
+        Las preguntas son aleatorias y las omitidas cuentan como incorrectas.
+      </p>
     </section>
 
+    <!-- QUIZ -->
     <section id="screen-quiz" class="hidden-screen">
-      <div class="flex justify-between items-end gap-4 mb-4 px-1">
+      <div class="flex items-end justify-between gap-4 mb-4 px-1">
         <div>
-          <span id="q-category" class="inline-flex items-center gap-2 text-[10px] font-black bg-orange-600/90 px-3 py-1 rounded-full uppercase tracking-[.18em]">Lección</span>
+          <span id="q-category" class="inline-flex items-center gap-2 text-[10px] font-black bg-orange-600/90 px-3 py-1 rounded-full uppercase tracking-[.18em]">Categoría</span>
           <div id="q-count" class="text-xs font-bold text-slate-400 mt-2">Pregunta 1 de 10</div>
         </div>
         <div class="text-right">
@@ -222,7 +263,7 @@
         <div id="q-progress" class="progress-bar h-full rounded-full" style="width:0%"></div>
       </div>
 
-      <div id="q-card" class="glass rounded-[30px] p-6 slide-up">
+      <div class="glass rounded-[30px] p-6 fade-up">
         <div class="flex items-center gap-2 text-[11px] uppercase tracking-[.18em] font-bold text-slate-400 mb-3">
           <i class="fa-solid fa-helmet-safety text-orange-400"></i>
           Pregunta táctica
@@ -233,33 +274,39 @@
 
       <div class="grid grid-cols-2 gap-3 mt-5">
         <button id="btn-skip" class="btn-soft rounded-2xl py-4 font-bold text-slate-300">Omitir</button>
-        <button id="btn-next" disabled class="w-full bg-white text-black rounded-2xl py-4 font-black disabled:opacity-30 disabled:cursor-not-allowed">Confirmar</button>
+        <button id="btn-next" disabled class="w-full bg-white text-black rounded-2xl py-4 font-black disabled:opacity-30 disabled:cursor-not-allowed">
+          Confirmar
+        </button>
       </div>
     </section>
 
-    <section id="screen-results" class="hidden-screen slide-up">
-      <div class="glass rounded-[34px] p-7 text-center">
-        <div class="score-ring relative w-44 h-44 mx-auto mb-6 flex items-center justify-center">
+    <!-- RESULTS -->
+    <section id="screen-results" class="hidden-screen fade-up">
+      <div class="glass rounded-[32px] p-6 text-center">
+        <div class="relative w-44 h-44 mx-auto mb-6 flex items-center justify-center">
           <svg class="w-full h-full -rotate-90">
             <circle cx="88" cy="88" r="78" stroke="rgba(255,255,255,.06)" stroke-width="14" fill="none"></circle>
-            <circle id="score-circle" cx="88" cy="88" r="78" stroke="url(#gradScore)" stroke-width="14" fill="none"
+            <circle id="score-circle" cx="88" cy="88" r="78"
+              stroke="url(#gradScore)" stroke-width="14" fill="none"
               stroke-dasharray="490.09" stroke-dashoffset="490.09" stroke-linecap="round"></circle>
             <defs>
               <linearGradient id="gradScore" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#ef4444"></stop>
+                <stop offset="0%" stop-color="#dc2626"></stop>
                 <stop offset="100%" stop-color="#f97316"></stop>
               </linearGradient>
             </defs>
           </svg>
           <div class="absolute flex flex-col items-center">
             <div id="res-score" class="text-5xl font-black">0</div>
-            <div class="text-[10px] uppercase tracking-[.2em] font-bold text-slate-500">Puntaje</div>
+            <div class="text-[10px] uppercase tracking-[.18em] font-bold text-slate-500">Puntaje</div>
           </div>
         </div>
 
-        <div id="res-badge" class="inline-flex px-4 py-2 rounded-full text-[10px] uppercase tracking-[.18em] font-black mb-4 pill-mid">Resultado</div>
-        <h2 id="res-user" class="text-2xl font-black mb-2">Buen trabajo</h2>
-        <p id="res-message" class="muted text-sm leading-relaxed mb-6">Sigue reforzando ventilación, escaleras y seguridad estructural.</p>
+        <div id="res-badge" class="inline-flex px-4 py-2 rounded-full text-[10px] uppercase tracking-[.18em] font-black mb-4 pill-mid">
+          Resultado
+        </div>
+        <h2 id="res-user" class="text-2xl font-black mb-2">Resultado</h2>
+        <p id="res-message" class="muted text-sm leading-relaxed mb-6">Revisa tus respuestas y vuelve a intentarlo.</p>
 
         <div class="grid grid-cols-3 gap-3 mb-7">
           <div class="btn-soft rounded-2xl p-4">
@@ -288,96 +335,111 @@
 
   <script>
     const DATABASE = [
-      {
-        cat: "LECCIÓN 19",
-        q: "En el transporte de escaleras por dos Bomberos, ¿quién dirige la maniobra?",
-        o: ["El Bombero de atrás", "El Bombero que sostiene el último peldaño", "El Bombero de adelante", "El Bombero con mayor antigüedad"],
-        c: 2,
-        e: "La maniobra la dirige el bombero de adelante, porque marca el desplazamiento y el control visual del recorrido."
-      },
-      {
-        cat: "LECCIÓN 19",
-        q: "¿Cuál es la primera acción al iniciar el levantamiento de una escala simple por un Bombero?",
-        o: ["Apoyar la base contra la superficie previamente revisada", "Colocar la escala en posición vertical", "Extender completamente la escala", "Asegurar la escala con cuerdas"],
-        c: 0,
-        e: "Antes de levantar la escala, la base debe apoyarse y verificarse correctamente para asegurar estabilidad."
-      },
-      {
-        cat: "LECCIÓN 19",
-        q: "Al trabajar desde una escala, ¿qué elemento es obligatorio para afianzarse?",
-        o: ["Arnés integral", "Línea de vida", "Cinturón de seguridad bomberil", "Cuerda de rescate"],
-        c: 2,
-        e: "El cinturón de seguridad bomberil es el elemento operativo que permite afianzarse durante el trabajo desde la escala."
-      },
-      {
-        cat: "LECCIÓN 19",
-        q: "¿Cuál es la norma fundamental al subir una línea armada por una escala?",
-        o: ["Amarrarla al cinturón del Bombero", "Subirla siempre con agua", "Subirla sin agua y sin cruzarla sobre el cuerpo", "Cruzarla por el cuerpo para equilibrar"],
-        c: 2,
-        e: "La línea debe subirse sin agua y sin cruzarla sobre el cuerpo para evitar pérdida de equilibrio y riesgo operativo."
-      },
-      {
-        cat: "LECCIÓN 19",
-        q: "¿Cómo deben subirse los pitones y bifurcos por una escala?",
-        o: ["Amarrados a una cuerda", "Sujetándolos por la boquilla", "Colgados del cinturón", "Tomados por la llave y deslizando el antebrazo por el larguero"],
-        c: 3,
-        e: "Esa técnica mantiene mejor control del equipo durante el ascenso."
-      },
-      {
-        cat: "LECCIÓN 20",
-        q: "La ventilación mecánica por presión positiva (VPP) funciona al:",
-        o: ["Condensar los gases calientes", "Crear vacío en la estructura", "Reducir la presión interna", "Inyectar aire a presión para expulsar humo y gases"],
-        c: 3,
-        e: "La VPP introduce aire a presión para desplazar humo y gases hacia las salidas previstas."
-      },
-      {
-        cat: "LECCIÓN 20",
-        q: "En ventilación por presión negativa, el extractor debe colocarse:",
-        o: ["En cualquier abertura disponible", "Únicamente en el techo", "En contra de la dirección del viento", "A favor de la dirección del viento natural"],
-        c: 3,
-        e: "La presión negativa aprovecha la dirección natural del flujo para extraer humo con mayor eficiencia."
-      },
-      {
-        cat: "LECCIÓN 20",
-        q: "La ventilación hidráulica utiliza principalmente:",
-        o: ["Una corriente de neblina de agua para arrastrar humo y gases", "Agua en patrón sólido", "Extractores eléctricos", "Ventiladores portátiles"],
-        c: 0,
-        e: "Se emplea una corriente de neblina para mover humo y gases calientes fuera del compartimiento."
-      },
-      {
-        cat: "LECCIÓN 20",
-        q: "Una escalera utilizada para ventilación vertical debe:",
-        o: ["Sobrepasar la línea del techo en cinco peldaños y estar asegurada", "Apoyarse solo en la canaleta", "Usarse sin aseguramiento para mayor rapidez", "Llegar exactamente al borde del techo"],
-        c: 0,
-        e: "La escalera debe sobresalir y estar asegurada para facilitar transición segura techo-escalera."
-      },
-      {
-        cat: "LECCIÓN 21",
-        q: "El colapso estructural puede definirse como:",
-        o: ["Pérdida parcial sin deformación", "Falla total o parcial de la estructura", "Daño superficial", "Falla solo del techo"],
-        c: 1,
-        e: "El colapso implica falla total o parcial de la estructura, con pérdida de capacidad resistente."
-      },
-      {
-        cat: "LECCIÓN 21",
-        q: "La evaluación estructural debe realizarse:",
-        o: ["Antes, durante y después del incendio", "Solo después", "Solo durante", "Nunca"],
-        c: 0,
-        e: "La evaluación debe ser continua porque las condiciones cambian a lo largo de toda la intervención."
-      },
-      {
-        cat: "LECCIÓN 21",
-        q: "La dilatación térmica del acero provoca:",
-        o: ["Mayor resistencia", "Acortamiento", "Pérdida de resistencia estructural", "Endurecimiento"],
-        c: 2,
-        e: "El acero al calentarse se dilata y reduce su capacidad resistente, aumentando riesgo de falla."
-      }
+      // FACIL
+      {difficulty:'facil', cat:'Escaleras', q:'En el transporte de escaleras por dos Bomberos, ¿quién dirige la maniobra?', o:['El Bombero de atrás','El Bombero que sostiene el último peldaño','El Bombero de adelante','El Bombero con mayor antigüedad'], c:2, e:'El bombero de adelante dirige la maniobra.'},
+      {difficulty:'facil', cat:'Escaleras', q:'Al trabajar desde una escala, ¿qué elemento es obligatorio para afianzarse?', o:['Arnés integral','Línea de vida','Cinturón de seguridad bomberil','Cuerda de rescate'], c:2, e:'La maniobra segura exige el cinturón de seguridad bomberil.'},
+      {difficulty:'facil', cat:'Escaleras', q:'¿Cuál es la norma fundamental al subir una línea armada por una escala?', o:['Amarrarla al cinturón del Bombero','Subirla siempre con agua','Subirla sin agua y sin cruzarla sobre el cuerpo','Cruzarla por el cuerpo para equilibrar'], c:2, e:'La línea se sube sin agua y sin cruzarla sobre el cuerpo.'},
+      {difficulty:'facil', cat:'Escaleras', q:'¿Cómo deben subirse los pitones y bifurcos por una escala?', o:['Amarrados a una cuerda','Sujetándolos por la boquilla','Colgados del cinturón','Tomados por la llave y deslizando el antebrazo por el larguero'], c:3, e:'Esa técnica da mejor control durante el ascenso.'},
+      {difficulty:'facil', cat:'Ventilación', q:'El término barlovento se refiere a:', o:['El área opuesta a las salidas','La zona de mayor temperatura','El lado por donde sale el humo','El lado por donde ingresa el viento'], c:3, e:'Barlovento es el lado por donde entra el viento.'},
+      {difficulty:'facil', cat:'Ventilación', q:'La ventilación mecánica por presión positiva (VPP) funciona al:', o:['Condensar los gases calientes','Crear vacío en la estructura','Reducir la presión interna del ambiente','Inyectar aire a presión para expulsar humo y gases'], c:3, e:'La VPP introduce aire a presión para desplazar humo y gases.'},
+      {difficulty:'facil', cat:'Ventilación', q:'La ventilación hidráulica utiliza principalmente:', o:['Una corriente de neblina de agua para arrastrar humo y gases','Agua en patrón sólido','Extractores eléctricos','Ventiladores portátiles'], c:0, e:'Se usa neblina para mover humo y gases.'},
+      {difficulty:'facil', cat:'Colapso estructural', q:'El colapso estructural puede definirse como:', o:['Pérdida parcial sin deformación','Falla total o parcial de la estructura','Daño superficial','Falla solo del techo'], c:1, e:'Se refiere a una falla total o parcial de la estructura.'},
+      {difficulty:'facil', cat:'Colapso estructural', q:'El calor se transmite por:', o:['Conducción, convección y radiación','Evaporación únicamente','Fusión','Absorción'], c:0, e:'Son los tres mecanismos clásicos de transmisión del calor.'},
+      {difficulty:'facil', cat:'Colapso estructural', q:'La madera expuesta al fuego:', o:['Aumenta resistencia','Se contrae','Carboniza y pierde sección','No sufre daño'], c:2, e:'La carbonización reduce la sección resistente.'},
+      {difficulty:'facil', cat:'Dinámica del fuego', q:'El tetraedro del fuego incorpora un cuarto elemento que es:', o:['Deflagración','Vaporización','Radiación','Reacción química en cadena'], c:3, e:'El cuarto elemento es la reacción química en cadena.'},
+      {difficulty:'facil', cat:'Dinámica del fuego', q:'La conducción se caracteriza por:', o:['Desplazamiento vertical del calor','Transferencia de calor por contacto directo','Movimiento de gases calientes','Transferencia de calor por ondas'], c:1, e:'La conducción ocurre por contacto directo.'},
+      {difficulty:'facil', cat:'Extintores', q:'¿Para qué clase de fuego es efectivo un extintor a base de agua?', o:['Clase D','Clase A','Clase B','Clase C'], c:1, e:'El extintor de agua se emplea en fuegos Clase A.'},
+      {difficulty:'facil', cat:'Extintores', q:'¿En qué consiste el método de inhibición química?', o:['Interrumpir la reacción química en cadena de la combustión','Aislar físicamente el material combustible','Reducir la temperatura del combustible','Aumentar la humedad del ambiente'], c:0, e:'Consiste en cortar la reacción química en cadena.'},
+      {difficulty:'facil', cat:'Patrimonio', q:'Un incendio que afecta un monumento debe considerarse como:', o:['Incendio que afecta al patrimonio','Incendio estructural complejo','Incendio urbano','Incendio especial'], c:0, e:'Se clasifica como incendio que afecta al patrimonio.'},
+      {difficulty:'facil', cat:'Patrimonio', q:'La consigna “actúe como si usted viviese ahí” busca que el bombero:', o:['Evite el retiro de objetos','Priorice la estética del lugar','Minimice el tiempo de intervención','Empatice con el propietario y proteja sus bienes'], c:3, e:'Busca empatía y protección del patrimonio.'},
+      {difficulty:'facil', cat:'Entrada forzada', q:'¿Cuál de las siguientes herramientas NO es de palanca?', o:['Pata de cabra','Mandíbula de rescate','Halligan','Barreta'], c:1, e:'La mandíbula de rescate no es una herramienta de palanca.'},
+      {difficulty:'facil', cat:'Entrada forzada', q:'Al planificar la entrada forzada en una puerta, se debe considerar:', o:['El material y forma de construcción de la puerta','El número de bomberos','La cercanía al fuego','Solo el tipo de cerradura'], c:0, e:'Siempre debe considerarse el material y construcción de la puerta.'},
+      {difficulty:'facil', cat:'Hidráulica', q:'¿Por qué el agua es considerada el agente extintor más práctico y utilizado?', o:['Por su baja conductividad eléctrica','Por su capacidad de reflejar el calor','Por su bajo punto de ebullición','Por su estabilidad, disponibilidad y características extintoras'], c:3, e:'Por disponibilidad y buenas características extintoras.'},
+      {difficulty:'facil', cat:'Hidráulica', q:'¿Cuál es una característica principal de los chorros maestros?', o:['Se usan únicamente en interiores','Son chorros de gran volumen superiores a 350 GPM','Descargan menos de 200 GPM','Se alimentan con mangueras de 1.5”'], c:1, e:'Los chorros maestros son de gran volumen.'},
+
+      // MEDIA
+      {difficulty:'media', cat:'Escaleras', q:'¿Cuál es la primera acción al iniciar el levantamiento de una escala simple por un Bombero?', o:['Apoyar la base contra la superficie previamente revisada','Colocar la escala en posición vertical','Extender completamente la escala','Asegurar la escala con cuerdas'], c:0, e:'La base debe quedar bien apoyada antes de levantar la escala.'},
+      {difficulty:'media', cat:'Escaleras', q:'¿Cuál es la acción correcta antes de transitar por una escalera de extensión?', o:['Asegurar la escala con una cuerda al vehículo','Lubricar los largueros','Comprobar que los ganchos estén hacia afuera','Verificar que los retenes y trinquetes estén asegurados y la driza fija'], c:3, e:'Debe verificarse que los mecanismos de seguridad estén asegurados.'},
+      {difficulty:'media', cat:'Escaleras', q:'En el descenso de una víctima por un solo Bombero, ¿cómo se coloca la víctima?', o:['De costado sobre los brazos del Bombero','Sentada sobre los peldaños','Amarrada a la escala','De frente al Bombero'], c:3, e:'La víctima se posiciona de frente al bombero.'},
+      {difficulty:'media', cat:'Escaleras', q:'¿Cuál es la técnica correcta para subir una escala sin equipo?', o:['Tomar solo los peldaños','Subir de espaldas a la escala','Subir de dos peldaños a la vez','Alternar manos y pies sin saltarse peldaños'], c:3, e:'El ascenso debe ser controlado y alternado.'},
+      {difficulty:'media', cat:'Patrimonio', q:'El salvamento puede iniciarse cuando se cumple qué condición?', o:['El CI autoriza el reacondicionamiento','Se dispone del personal adecuado','El incendio ha sido completamente extinguido','Se ha terminado la ventilación'], c:1, e:'Debe iniciarse cuando se cuenta con el personal adecuado.'},
+      {difficulty:'media', cat:'Patrimonio', q:'La ventilación en incendios patrimoniales debe ser:', o:['Parcial','Adecuada en todos los recintos','Mecánica únicamente','Posterior a la investigación'], c:1, e:'Debe ser adecuada en todos los recintos comprometidos.'},
+      {difficulty:'media', cat:'Patrimonio', q:'La remoción de escombros tiene como objetivo principal:', o:['Acelerar el retorno del personal','Facilitar la investigación','Eliminar fuegos remanentes y evitar la reignición','Despejar accesos'], c:2, e:'Busca eliminar remanentes y evitar reignición.'},
+      {difficulty:'media', cat:'Patrimonio', q:'En propiedades como museos o centros de cómputo, la prioridad puede ser:', o:['Proteger el contenido incluso antes que la estructura','Aplicar agua de manera continua','Proteger la estructura antes que el contenido','Realizar ventilación forzada inmediata'], c:0, e:'En ciertos casos el contenido tiene mayor valor que la estructura.'},
+      {difficulty:'media', cat:'Colapso estructural', q:'La dilatación térmica del acero provoca:', o:['Mayor resistencia','Acortamiento','Pérdida de resistencia estructural','Endurecimiento'], c:2, e:'El acero caliente pierde capacidad resistente.'},
+      {difficulty:'media', cat:'Colapso estructural', q:'El concreto armado pierde resistencia debido a:', o:['Enfriamiento rápido','Calor prolongado','Falta de ventilación','Humedad externa'], c:1, e:'El calor prolongado reduce su resistencia.'},
+      {difficulty:'media', cat:'Colapso estructural', q:'El riesgo principal de techos metálicos es:', o:['Oxidación inmediata','Dilatación y colapso','Enfriamiento rápido','Aislamiento térmico'], c:1, e:'La dilatación compromete la estabilidad del techo.'},
+      {difficulty:'media', cat:'Colapso estructural', q:'Los muros portantes:', o:['No soportan carga','Solo decorativos','Soportan peso estructural','Solo separan ambientes'], c:2, e:'Su función es soportar cargas.'},
+      {difficulty:'media', cat:'Ventilación', q:'En ventilación horizontal, las aberturas que deben abrirse primero son las ubicadas en:', o:['Sotavento','El centro del incendio','Barlovento','El punto más alto de la estructura'], c:2, e:'Se abren primero las de barlovento.'},
+      {difficulty:'media', cat:'Ventilación', q:'Para reducir el riesgo de backdraft se recomienda:', o:['Realizar ventilación vertical para liberar gases sobrecalentados','Abrir puertas a nivel del suelo','Incrementar la presión positiva','Aplicar agua directamente al fuego'], c:0, e:'La ventilación vertical controlada ayuda a reducir ese riesgo.'},
+      {difficulty:'media', cat:'Ventilación', q:'Durante la ventilación vertical, trabajar con el viento a la espalda permite:', o:['Eliminar la necesidad de EPRA','Proteger al personal del humo y gases calientes','Aumentar la velocidad del corte en el techo','Reducir el peso estructural del techo'], c:1, e:'El viento a la espalda ayuda a mantener el humo alejado del personal.'},
+      {difficulty:'media', cat:'Ventilación', q:'Antes de realizar una ventilación vertical, el bombero debe analizar principalmente:', o:['El tipo de manguera disponible','El tiempo de llegada de refuerzos','El tipo de estructura y la propagación del incendio','La cantidad de víctimas confirmadas'], c:2, e:'La estructura y la propagación definen la táctica.'},
+      {difficulty:'media', cat:'Ventilación', q:'El flujo de aire en un incendio se refiere a:', o:['La dirección del viento exterior únicamente','La presión hidráulica disponible','El movimiento del aire hacia la combustión y del humo hacia el exterior','El movimiento del agua dentro de la estructura'], c:2, e:'Es el desplazamiento del aire y humo en relación con el fuego.'},
+      {difficulty:'media', cat:'Ventilación', q:'En ventilación por presión negativa, el extractor debe colocarse:', o:['En cualquier abertura disponible','Únicamente en el techo','En contra de la dirección del viento','A favor de la dirección del viento natural'], c:3, e:'Debe aprovechar la dirección natural del viento.'},
+      {difficulty:'media', cat:'Ventilación', q:'Una escalera utilizada para ventilación vertical debe:', o:['Sobrepasar la línea del techo en cinco peldaños y estar asegurada','Apoyarse solo en la canaleta','Usarse sin aseguramiento para mayor rapidez','Llegar exactamente al borde del techo'], c:0, e:'Debe sobresalir y quedar asegurada.'},
+      {difficulty:'media', cat:'Hidráulica', q:'¿Qué describe correctamente la gravedad específica de un líquido con valor menor a 1?', o:['Es más pesado que el agua','Es eléctricamente conductor','Flota sobre el agua','Se hunde rápidamente'], c:2, e:'Un valor menor a 1 indica que el líquido flota sobre el agua.'},
+      {difficulty:'media', cat:'Hidráulica', q:'¿Para qué se utiliza principalmente el chorro de ventilación o media neblina?', o:['Ataque directo a combustibles líquidos','Ventilación hidráulica y extracción de humo','Enfriamiento estructural directo','Penetración profunda del fuego'], c:1, e:'La media neblina es útil para ventilación hidráulica.'},
+      {difficulty:'media', cat:'Hidráulica', q:'¿En qué situación se recomienda el chorro de pulso largo?', o:['Ambientes internos de mayor volumen','Compartimientos pequeños','Incendios de líquidos inflamables','Ataques defensivos exteriores'], c:0, e:'Se emplea en ambientes internos de mayor volumen.'},
+      {difficulty:'media', cat:'Hidráulica', q:'¿Cuál es una desventaja del agua como agente extintor frente a ciertos combustibles?', o:['Reacción peligrosa con metales combustibles','Baja capacidad de absorción térmica','Escasa disponibilidad operativa','Bajo calor latente de evaporación'], c:0, e:'Con metales combustibles puede generar reacciones peligrosas.'},
+      {difficulty:'media', cat:'Hidráulica', q:'¿Cuál es el ángulo recomendado del chorro nebulizado 3D respecto al piso?', o:['90°','30°','45°','120°'], c:2, e:'El ángulo recomendado es 45 grados.'},
+      {difficulty:'media', cat:'Hidráulica', q:'¿Cuál NO es un propósito de los chorros contraincendios?', o:['Dispersar humo y gases calientes','Reducir temperaturas elevadas','Proteger a los bomberos','Incrementar la combustión controlada'], c:3, e:'Los chorros no buscan incrementar la combustión.'},
+      {difficulty:'media', cat:'Hidráulica', q:'¿Cuál es el rango de caudal recomendado para el ataque indirecto?', o:['30 a 125 GPM','10 a 60 GPM','15 a 30 GPM','Mayor a 150 GPM'], c:0, e:'Ese es el rango recomendado para ataque indirecto.'},
+      {difficulty:'media', cat:'Entrada forzada', q:'Para forzar una puerta batiente, se recomienda:', o:['Romper el vidrio más cercano','Introducir la cuña del Halligan en la zona de la chapa y hacer palanca','Cortar las bisagras siempre','Golpear directamente la cerradura'], c:1, e:'Es la técnica estándar con Halligan.'},
+      {difficulty:'media', cat:'Entrada forzada', q:'Las pértigas o ganchos solo pueden usarse en cables energizados cuando:', o:['El cable esté seco, en baja tensión y sea realmente necesario','El cable esté aislado','Se actúe con rapidez','Se utilicen guantes estructurales'], c:0, e:'Solo bajo esa condición excepcional.'},
+      {difficulty:'media', cat:'Entrada forzada', q:'La motosierra debe transportarse:', o:['Con el freno de cadena liberado','Encendida para ahorrar tiempo','Con la espada sin protección','Apagada, con protector de espada y orientada hacia atrás'], c:3, e:'Es la forma segura de transportarla.'},
+      {difficulty:'media', cat:'Entrada forzada', q:'Las ventanas con mallas o barrotes requieren:', o:['Golpes directos al vidrio','Ventilación previa obligatoria','Solo herramientas manuales','Cortar primero los soportes de la protección'], c:3, e:'Primero deben cortarse los soportes de la protección.'},
+      {difficulty:'media', cat:'Extintores', q:'¿Qué se entiende por agente extintor según la definición técnica?', o:['El material metálico del recipiente','El compuesto ignífugo que constituye la carga del extintor','El mecanismo de descarga del extintor','El gas utilizado para presurizar el cilindro'], c:1, e:'El agente extintor es la carga activa del equipo.'},
+      {difficulty:'media', cat:'Extintores', q:'La clasificación y rango de un extintor se determina considerando:', o:['La experiencia del operador experto','El desempeño de un operador novato sobre el 40% del fuego controlado','La duración máxima de descarga','La capacidad total del cilindro'], c:1, e:'La clasificación considera desempeño real de un operador novato.'},
+      {difficulty:'media', cat:'Extintores', q:'¿Qué indican los pictogramas con fondo negro y banda diagonal?', o:['Uso obligatorio del extintor','Alta peligrosidad del incendio','Uso no permitido del agente extintor','Área restringida al público'], c:2, e:'Indican uso no permitido en esa clase de fuego.'},
+      {difficulty:'media', cat:'Extintores', q:'¿Para qué tipo de incendio es especialmente recomendable el extintor de espuma?', o:['Fuegos eléctricos energizados','Fuegos de gases comprimidos','Fuegos de líquidos inflamables como aceites o grasas','Fuegos de metales reactivos'], c:2, e:'La espuma es ideal en líquidos inflamables.'},
+      {difficulty:'media', cat:'Extintores', q:'¿Cuál es la finalidad principal de la inspección de extintores?', o:['Garantizar su recarga anual','Verificar su ubicación estética','Dar una seguridad relativa sobre su operatividad','Asegurar su uso exclusivo por bomberos'], c:2, e:'La inspección da seguridad relativa sobre su operatividad.'},
+
+      // DIFICIL
+      {difficulty:'dificil', cat:'Colapso estructural', q:'El aumento de temperatura de los elementos estructurales durante un incendio se debe principalmente a:', o:['Reacciones químicas internas','Humedad ambiental','Convección y radiación de los gases calientes','Conducción desde el suelo'], c:2, e:'Los gases calientes transmiten calor por convección y radiación.'},
+      {difficulty:'dificil', cat:'Colapso estructural', q:'El fenómeno conocido como “spalling” en el concreto se produce principalmente por:', o:['Fusión del acero de refuerzo','Presión interna del agua que se evapora','Contracción térmica uniforme','Impacto mecánico externo'], c:1, e:'El agua atrapada se evapora y genera presión interna.'},
+      {difficulty:'dificil', cat:'Colapso estructural', q:'¿Qué fenómeno genera el flujo de calor por convección en un incendio?', o:['La emisión de ondas electromagnéticas','El contacto directo con las llamas','La diferencia de densidad entre gases calientes y fríos','La transferencia por conducción'], c:2, e:'La convección se explica por diferencias de densidad.'},
+      {difficulty:'dificil', cat:'Colapso estructural', q:'La evaluación estructural debe realizarse:', o:['Antes, durante y después del incendio','Solo después','Solo durante','Nunca'], c:0, e:'La evaluación debe ser continua.'},
+      {difficulty:'dificil', cat:'Hidráulica', q:'¿Por qué el chorro sólido presenta dificultad operativa para el pitonero?', o:['Genera una fuerte reacción que empuja al operador hacia atrás','Produce exceso de vapor','Tiene baja presión de descarga','Reduce la estabilidad térmica'], c:0, e:'La reacción del chorro sólido exige mayor control del pitonero.'},
+      {difficulty:'dificil', cat:'Hidráulica', q:'¿Cuál es una desventaja importante del ataque indirecto?', o:['La pérdida total de visibilidad por generación de vapor','Imposibilidad de enfriar el recinto','Dificultad para alcanzar grandes volúmenes','Mayor consumo de agua'], c:0, e:'La generación de vapor puede anular la visibilidad.'},
+      {difficulty:'dificil', cat:'Hidráulica', q:'¿Cuál de las siguientes NO es una ventaja del enfriamiento de gases?', o:['Mayor seguridad frente al flashover','Extinción completa del incendio','Elevación del plano neutro','Conservación del equilibrio térmico'], c:1, e:'El enfriamiento de gases no significa extinción completa.'},
+      {difficulty:'dificil', cat:'Hidráulica', q:'¿Por qué no debe utilizarse un chorro en cono durante el ablandamiento?', o:['Reduce el alcance del agua','Bloquea la salida de gases','Impide la deflagración','Aumenta la presión interior'], c:1, e:'Puede bloquear la salida de gases calientes.'},
+      {difficulty:'dificil', cat:'Hidráulica', q:'Antes de ingresar a un compartimiento, el bombero debe evaluar:', o:['Signos de flashover y backdraft','Tipo de pitón instalado','Resistencia del piso','Cantidad de agua disponible'], c:0, e:'La evaluación de fenómenos peligrosos es prioritaria.'},
+      {difficulty:'dificil', cat:'Hidráulica', q:'¿Cuál es el objetivo del ataque defensivo contra la propagación?', o:['Ventilar los gases calientes','Limitar la expansión del incendio a zonas no afectadas','Reducir el tiempo de intervención','Extinguir el foco principal'], c:1, e:'Busca cortar la propagación a sectores no comprometidos.'},
+      {difficulty:'dificil', cat:'Hidráulica', q:'¿Por qué se debe atacar el fuego desde el lado que no está ardiendo?', o:['Para acelerar la extinción','Para mejorar la visibilidad','Para evitar la propagación del fuego por efecto del chorro','Para ahorrar agua'], c:2, e:'Así se reduce el empuje del fuego hacia zonas sanas.'},
+      {difficulty:'dificil', cat:'Hidráulica bomba', q:'¿Cuál es el caudal aproximado de salida de una cisterna durante el abastecimiento?', o:['300 a 350 GPM','100 a 150 GPM','200 a 230 GPM','400 a 450 GPM'], c:0, e:'Ese es el rango aproximado indicado.'},
+      {difficulty:'dificil', cat:'Hidráulica bomba', q:'¿Qué efecto produce la cavitación en los órganos de la bomba?', o:['Enfriamiento del impulsor','Incremento del rendimiento hidráulico','Choques violentos y corrosión mecánica','Lubricación interna'], c:2, e:'La cavitación deteriora internamente la bomba.'},
+      {difficulty:'dificil', cat:'Hidráulica bomba', q:'¿Cuál es la altura máxima teórica de aspiración a nivel del mar?', o:['9,0 metros','10,33 metros','12,0 metros','7,5 metros'], c:1, e:'La altura máxima teórica es 10,33 m.'},
+      {difficulty:'dificil', cat:'Hidráulica bomba', q:'¿Cuándo se considera que una bomba se encuentra en aspiración?', o:['Cuando se abastece desde un hidrante','Cuando la fuente de agua está al mismo nivel del eje de la bomba','Cuando la fuente de agua está por encima del eje de la bomba','Cuando la fuente de agua está por debajo del eje de la bomba'], c:3, e:'Es aspiración cuando la fuente está por debajo del eje de la bomba.'},
+      {difficulty:'dificil', cat:'Hidráulica bomba', q:'¿Qué factor NO influye en la capacidad de succión de una bomba?', o:['Diseño de la bomba','Temperatura del agua','Color del vehículo contra incendios','Presión atmosférica'], c:2, e:'El color del vehículo no influye.'},
+      {difficulty:'dificil', cat:'Hidráulica bomba', q:'¿Cuándo se recomienda un abastecimiento en paralelo entre unidades?', o:['Cuando se necesita como máximo 1,000 GPM','Cuando se requiere menos de 500 GPM','Cuando no existen cisternas disponibles','Cuando se requiere más de 1,000 GPM'], c:3, e:'Se usa cuando la demanda es superior a 1,000 GPM.'},
+      {difficulty:'dificil', cat:'Hidráulica bomba', q:'¿Qué instrumento se utiliza para medir la presión de líquidos y gases en sistemas contraincendios?', o:['Manómetro','Anemómetro','Barómetro','Higrómetro'], c:0, e:'El instrumento es el manómetro.'},
+      {difficulty:'dificil', cat:'Hidráulica bomba', q:'¿Cómo se denomina la presión cuando el fluido está en reposo?', o:['Presión estática','Presión dinámica','Presión de trabajo','Presión residual'], c:0, e:'Cuando el fluido está en reposo es presión estática.'},
+      {difficulty:'dificil', cat:'Hidráulica bomba', q:'¿En qué consiste el efecto Venturi?', o:['Detención total del fluido','Aumento de sección y presión','Disminución de velocidad','Reducción de sección que aumenta velocidad y reduce presión'], c:3, e:'Menor sección, mayor velocidad y menor presión.'},
+      {difficulty:'dificil', cat:'Dinámica del fuego', q:'El rango de inflamabilidad indica:', o:['La velocidad del fuego','El tipo de agente extintor a usar','La presión interna del combustible','Los límites de concentración para que la llama se propague'], c:3, e:'Define el rango de concentraciones inflamables.'},
+      {difficulty:'dificil', cat:'Dinámica del fuego', q:'La temperatura de inflamación se define como:', o:['La temperatura máxima del incendio','La temperatura mínima a la que emite vapores inflamables con fuente de ignición','La temperatura a la que el combustible se quema completamente','El punto en que ocurre la autoignición'], c:1, e:'Es la temperatura mínima con presencia de fuente de ignición.'},
+      {difficulty:'dificil', cat:'Dinámica del fuego', q:'La oxidación lenta se diferencia de la rápida principalmente porque:', o:['Se produce a menor velocidad y sin llamas visibles','No libera energía','Ocurre sin cambio químico','No requiere oxígeno'], c:0, e:'La oxidación lenta no presenta llamas visibles.'},
+      {difficulty:'dificil', cat:'Dinámica del fuego', q:'Según la lección, la principal causa de muertes en incendios es:', o:['La exposición a gases tóxicos y la falta de oxígeno','La radiación térmica','El colapso estructural','Las llamas directas'], c:0, e:'Los gases tóxicos y la falta de oxígeno son la principal causa.'},
+      {difficulty:'dificil', cat:'Dinámica del fuego', q:'La autoignición se caracteriza porque:', o:['Ocurre sin presencia de oxígeno','Se produce sin fuente externa de ignición visible','Requiere una chispa externa','Solo ocurre en líquidos inflamables'], c:1, e:'No necesita una fuente externa visible.'},
+      {difficulty:'dificil', cat:'Dinámica del fuego', q:'La pirolisis es fundamental en la combustión porque:', o:['Reduce la temperatura del combustible','Inhibe la reacción química en cadena','Elimina la necesidad de calor','Genera fragmentos que reaccionan con el oxígeno y sostienen la reacción'], c:3, e:'La pirolisis libera productos combustibles.'},
+      {difficulty:'dificil', cat:'Dinámica del fuego', q:'El flashover se define como:', o:['Explosión retardada de gases','Entrada súbita de aire frío','Combustión parcial de materiales','Ignición súbita generalizada del contenido del recinto'], c:3, e:'Es la ignición súbita generalizada del contenido.'},
+      {difficulty:'dificil', cat:'Dinámica del fuego', q:'Durante la fase de decaimiento, el oxígeno puede encontrarse:', o:['Estable sin variaciones','Por debajo del 15 %','Por encima del 21 %','En niveles irrelevantes para la combustión'], c:1, e:'En decaimiento el oxígeno puede caer por debajo del 15%.'},
+      {difficulty:'dificil', cat:'Extintores', q:'¿Para qué tipo de fuego están diseñados los extintores de polvo seco?', o:['Fuegos eléctricos energizados','Fuegos de líquidos inflamables','Fuegos clase D de metales combustibles','Fuegos de sólidos comunes'], c:2, e:'En esta pregunta el foco está en clase D, metales combustibles.'},
+      {difficulty:'dificil', cat:'Extintores', q:'Un extintor clasificado como 60B indica que:', o:['Es exclusivo para líquidos derivados del petróleo','Tiene 60 segundos de descarga continua','Puede extinguir 60 incendios consecutivos','Un operador novato puede extinguir 60 pies cuadrados de fuego'], c:3, e:'La clasificación B se refiere al área aproximada de cobertura.'},
+      {difficulty:'dificil', cat:'Extintores', q:'¿Por qué el extintor de espuma no es efectivo en fuegos de alcohol?', o:['Porque genera reacciones químicas peligrosas','Porque no enfría el combustible','Porque el alcohol se mezcla con el agua y destruye la espuma','Porque conduce electricidad'], c:2, e:'El alcohol destruye la capa de espuma.'}
     ];
+
+    const LEVELS = {
+      nivel1: { label: 'Nivel 1', total: 10, allowed: ['facil'] },
+      nivel2: { label: 'Nivel 2', total: 20, allowed: ['facil', 'media'] },
+      nivel3: { label: 'Nivel 3', total: 30, allowed: ['media', 'dificil'] },
+      experto: { label: 'Experto', total: 40, allowed: ['facil', 'media', 'dificil'] }
+    };
 
     const $ = (id) => document.getElementById(id);
 
     const state = {
-      mode: 'random',
+      level: 'nivel1',
+      mode: 'simulacro',
       pool: [],
       idx: 0,
       score: 0,
@@ -385,42 +447,59 @@
       log: [],
       timer: 0,
       interval: null,
-      user: 'Efectivo'
+      user: 'Efectivo',
+      total: 10
     };
 
-    function shuffle(arr) {
+    function shuffle(arr){
       return [...arr].sort(() => Math.random() - 0.5);
     }
 
-    function formatTime(sec) {
-      const m = Math.floor(sec / 60).toString().padStart(2, '0');
-      const s = (sec % 60).toString().padStart(2, '0');
+    function formatTime(sec){
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
       return `${m}:${s}`;
     }
 
-    function setMode(mode) {
-      state.mode = mode;
-      $('mode-random').classList.toggle('selected', mode === 'random');
-      $('mode-study').classList.toggle('selected', mode === 'study');
-    }
-
-    function show(screenId) {
-      ['screen-home', 'screen-quiz', 'screen-results'].forEach(id => $(id).classList.add('hidden-screen'));
+    function show(screenId){
+      ['screen-home','screen-quiz','screen-results'].forEach(id => $(id).classList.add('hidden-screen'));
       $(screenId).classList.remove('hidden-screen');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function startTimer() {
+    function setLevel(level){
+      state.level = level;
+      document.querySelectorAll('.level-card').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.level === level);
+      });
+      $('home-total').textContent = LEVELS[level].total;
+    }
+
+    function setMode(mode){
+      state.mode = mode;
+      document.querySelectorAll('.mode-card').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.mode === mode);
+      });
+    }
+
+    function getPoolByLevel(){
+      const config = LEVELS[state.level];
+      const filtered = DATABASE.filter(q => config.allowed.includes(q.difficulty));
+      return shuffle(filtered).slice(0, Math.min(config.total, filtered.length));
+    }
+
+    function startTimer(){
       clearInterval(state.interval);
       state.interval = setInterval(() => {
-        state.timer += 1;
+        state.timer++;
         $('q-timer').textContent = formatTime(state.timer);
       }, 1000);
     }
 
-    function initQuiz() {
+    function initQuiz(){
       state.user = $('user-name').value.trim() || 'Efectivo';
-      state.pool = shuffle(DATABASE).slice(0, 10);
+      state.pool = getPoolByLevel();
+      state.total = state.pool.length;
       state.idx = 0;
       state.score = 0;
       state.selected = null;
@@ -432,30 +511,33 @@
       renderQuestion();
     }
 
-    function renderQuestion() {
+    function renderQuestion(){
       const q = state.pool[state.idx];
       state.selected = null;
       $('btn-next').disabled = true;
       $('q-category').textContent = q.cat;
-      $('q-count').textContent = `Pregunta ${state.idx + 1} de ${state.pool.length}`;
+      $('q-count').textContent = `Pregunta ${state.idx + 1} de ${state.total}`;
       $('q-text').textContent = q.q;
-      $('q-progress').style.width = `${((state.idx + 1) / state.pool.length) * 100}%`;
+      $('q-progress').style.width = `${((state.idx + 1) / state.total) * 100}%`;
 
-      const container = $('options-container');
-      container.innerHTML = '';
+      const cont = $('options-container');
+      cont.innerHTML = '';
 
-      q.o.forEach((option, i) => {
+      q.o.forEach((opt, i) => {
         const btn = document.createElement('button');
         btn.className = 'option-item w-full rounded-2xl p-4 text-left flex items-center justify-between gap-3';
         btn.innerHTML = `
           <div class="flex items-start gap-3">
-            <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xs font-black shrink-0">${String.fromCharCode(65 + i)}</div>
-            <span class="text-sm font-semibold leading-relaxed">${option}</span>
+            <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xs font-black shrink-0">
+              ${String.fromCharCode(65 + i)}
+            </div>
+            <span class="text-sm font-semibold leading-relaxed">${opt}</span>
           </div>
           <div class="w-5 h-5 rounded-full border border-white/20 flex items-center justify-center shrink-0">
             <div class="dot w-2.5 h-2.5 rounded-full bg-white opacity-0"></div>
           </div>
         `;
+
         btn.addEventListener('click', () => {
           document.querySelectorAll('.option-item').forEach(el => {
             el.classList.remove('selected');
@@ -467,89 +549,123 @@
           state.selected = i;
           $('btn-next').disabled = false;
         });
-        container.appendChild(btn);
+
+        cont.appendChild(btn);
       });
     }
 
-    function submitAnswer(skipped = false) {
+    function submitAnswer(skipped = false){
       const q = state.pool[state.idx];
-      const isCorrect = !skipped && state.selected === q.c;
-      if (isCorrect) state.score += 1;
+      const ok = !skipped && state.selected === q.c;
+
+      if (ok) state.score++;
 
       state.log.push({
         cat: q.cat,
         q: q.q,
         user: skipped ? 'Omitida' : q.o[state.selected],
         correct: q.o[q.c],
-        ok: isCorrect,
+        ok,
         explanation: q.e
       });
 
-      state.idx += 1;
-      if (state.idx < state.pool.length) renderQuestion();
-      else finishQuiz();
+      state.idx++;
+
+      if (state.idx < state.total){
+        renderQuestion();
+      } else {
+        finishQuiz();
+      }
     }
 
-    function finishQuiz() {
+    function finishQuiz(){
       clearInterval(state.interval);
-      const pct = Math.round((state.score / state.pool.length) * 100);
+
+      const pct = Math.round((state.score / state.total) * 100);
+
       $('res-score').textContent = pct;
       $('res-correct').textContent = state.score;
-      $('res-wrong').textContent = state.pool.length - state.score;
+      $('res-wrong').textContent = state.total - state.score;
       $('res-time').textContent = formatTime(state.timer);
       $('res-user').textContent = `Resultado de ${state.user}`;
+
       $('score-circle').style.transition = 'stroke-dashoffset 1s ease';
       $('score-circle').style.strokeDashoffset = 490.09 - (490.09 * pct / 100);
 
       const badge = $('res-badge');
       badge.className = 'inline-flex px-4 py-2 rounded-full text-[10px] uppercase tracking-[.18em] font-black mb-4';
-      if (pct >= 80) {
-        badge.classList.add('pill-pass');
-        badge.textContent = 'Nivel operativo alto';
-        $('res-message').textContent = 'Buen dominio. Mantén repaso de maniobras, ventilación y seguridad estructural.';
-      } else if (pct >= 60) {
+
+      if (pct >= 90){
+        badge.classList.add('pill-ok');
+        badge.textContent = 'Nivel sobresaliente';
+        $('res-message').textContent = 'Excelente desempeño. Mantén el ritmo y sigue reforzando con rondas nuevas.';
+      } else if (pct >= 75){
+        badge.classList.add('pill-ok');
+        badge.textContent = 'Buen desempeño';
+        $('res-message').textContent = 'Buen nivel. Refuerza algunos conceptos técnicos para mejorar aún más.';
+      } else if (pct >= 60){
         badge.classList.add('pill-mid');
-        badge.textContent = 'Nivel en progreso';
-        $('res-message').textContent = 'Vas bien, pero aún conviene reforzar conceptos clave antes del examen.';
+        badge.textContent = 'En progreso';
+        $('res-message').textContent = 'Vas bien, pero aún conviene reforzar varios temas antes del examen.';
       } else {
-        badge.classList.add('pill-low');
-        badge.textContent = 'Reforzar estudio';
-        $('res-message').textContent = 'Te conviene repetir el simulador y revisar a detalle cada pregunta fallada.';
+        badge.classList.add('pill-bad');
+        badge.textContent = 'Necesita refuerzo';
+        $('res-message').textContent = 'Debes repasar con calma. Usa la revisión final y vuelve a intentarlo.';
       }
+
+      $('review-area').classList.add('hidden-screen');
+      $('review-area').innerHTML = '';
+      $('review-area').dataset.loaded = '0';
 
       show('screen-results');
     }
 
-    function toggleReview() {
+    function toggleReview(){
       const area = $('review-area');
       area.classList.toggle('hidden-screen');
-      if (area.dataset.loaded === '1') return;
+
+      if (area.dataset.loaded === '1'){
+        area.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+
       area.dataset.loaded = '1';
       area.innerHTML = '<h3 class="text-white font-black text-lg px-1">Revisión táctica</h3>';
 
       state.log.forEach(item => {
         const card = document.createElement('div');
-        card.className = `review-card glass rounded-[26px] p-5 ${item.ok ? 'ok' : 'bad'}`;
+        card.className = `glass rounded-[24px] p-5 ${item.ok ? 'review-ok' : 'review-bad'}`;
+
         card.innerHTML = `
           <div class="text-[10px] uppercase tracking-[.16em] font-black text-slate-500 mb-2">${item.cat}</div>
           <div class="text-sm font-extrabold leading-relaxed mb-3">${item.q}</div>
           <div class="text-xs mb-2 ${item.ok ? 'text-green-400' : 'text-red-400'}"><strong>Tu respuesta:</strong> ${item.user}</div>
           <div class="text-xs text-slate-300"><strong>Correcta:</strong> ${item.correct}</div>
-          ${state.mode === 'study' ? `<div class="text-xs text-slate-400 mt-3 leading-relaxed"><strong>Refuerzo:</strong> ${item.explanation}</div>` : ''}
+          ${state.mode === 'estudio' ? `<div class="text-xs text-slate-400 mt-3 leading-relaxed"><strong>Refuerzo:</strong> ${item.explanation}</div>` : ''}
         `;
+
         area.appendChild(card);
       });
 
       area.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    $('mode-random').addEventListener('click', () => setMode('random'));
-    $('mode-study').addEventListener('click', () => setMode('study'));
+    document.querySelectorAll('.level-card').forEach(btn => {
+      btn.addEventListener('click', () => setLevel(btn.dataset.level));
+    });
+
+    document.querySelectorAll('.mode-card').forEach(btn => {
+      btn.addEventListener('click', () => setMode(btn.dataset.mode));
+    });
+
     $('btn-start').addEventListener('click', initQuiz);
     $('btn-next').addEventListener('click', () => submitAnswer(false));
     $('btn-skip').addEventListener('click', () => submitAnswer(true));
     $('btn-review').addEventListener('click', toggleReview);
     $('btn-restart').addEventListener('click', () => location.reload());
+
+    setLevel('nivel1');
+    setMode('simulacro');
   </script>
 </body>
 </html>
